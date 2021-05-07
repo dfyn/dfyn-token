@@ -1,0 +1,35 @@
+{
+    "name": "dfyn-token",
+    "version": "0.0.1",
+    "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:dfyn/dfyn-token.git"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@openzeppelin/contracts": "^3.3.0",
+        "eth-gas-reporter": "^0.2.22",
+        "truffle-plugin-verify": "^0.5.7"
+    },
+    "devDependencies": {
+        "@truffle/hdwallet-provider": "^1.2.2",
+        "solc": "^0.6.12",
+        "truffle": "^5.1.58",
+        "truffle-flattener": "^1.5.0"
+    },
+    "scripts": {
+        "test": "truffle test --stacktrace",
+        "dist": "yarn dist:token && yarn optimize",
+        "dist:token": "truffle-flattener ./contracts/DFYN.sol | awk '/SPDX-License-Identifier/&&c++>0 {next} 1' | awk '/pragma experimental ABIEncoderV2;/&&c++>0 {next} 1' > ./DFYNToken.sol && solcjs --bin --abi --optimize ./DFYNToken.sol && mv ./__DFYNToken_sol_DFYNToken.bin ./DFYNToken.bin && mv ./__DFYNToken_sol_DFYNToken.abi ./DFYNToken.abi && rm ./*_sol_*",
+        "optimize": "node optimize.js",
+        "coverage": "truffle run coverage",
+        "coveralls": "truffle run coverage && cat coverage/lcov.info | coveralls",
+        "lint:js": "eslint .",
+        "lint:js:fix": "eslint . --fix",
+        "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
+        "lint:sol:fix": "solhint --max-warnings 0 \"contracts/**/*.sol\" --fix",
+        "lint": "yarn run lint:js && yarn run lint:sol",
+        "lint:fix": "yarn run lint:js:fix && yarn run lint:sol:fix"
+    }
+}
