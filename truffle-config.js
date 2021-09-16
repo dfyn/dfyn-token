@@ -1,7 +1,8 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const privateKey = '';
-const etherscanAPIKey = ''
-const mainnetEndpointUrl = 'https://mainnet.infura.io/v3/9b2d9ce8681f477199d092f7e77658c5';
+require('dotenv').config();
+const privateKey = process.env.PRIVATE_KEY;
+const etherscanAPIKey = process.env.PRIVATE_KEY;
+const mainnetEndpointUrl = process.env.MAINNET_ENDPOINT_URL;
 
 module.exports = {
     networks: {
